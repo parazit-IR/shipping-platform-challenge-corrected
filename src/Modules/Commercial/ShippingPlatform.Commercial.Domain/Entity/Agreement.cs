@@ -39,4 +39,15 @@ public sealed class Agreement : AggregateRoot
 
         return AgreementEligibilityStatus.Eligible;
     }
+    
+    public static Agreement Map(
+        AgreementId id,
+        CustomerId customerId,
+        AgreementStatus status)
+    {
+        return new Agreement(
+            id,
+            customerId,
+            status);
+    }
 }

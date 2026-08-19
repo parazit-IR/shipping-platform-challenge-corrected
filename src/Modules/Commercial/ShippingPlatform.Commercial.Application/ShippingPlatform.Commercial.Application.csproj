@@ -8,9 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Exception\" />
-      <Folder Include="Port\In\" />
-      <Folder Include="Port\Out\" />
-      <Folder Include="Service\" />
     </ItemGroup>
 
     <ItemGroup>
