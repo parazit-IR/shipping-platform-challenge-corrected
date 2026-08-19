@@ -1,6 +1,7 @@
 using ShippingPlatform.Booking.Domain.Event;
 using ShippingPlatform.Booking.Domain.Exception;
 using ShippingPlatform.Booking.Domain.ValueObject;
+using ShippingPlatform.SharedKernel;
 
 namespace ShippingPlatform.Booking.Domain.Entity;
 

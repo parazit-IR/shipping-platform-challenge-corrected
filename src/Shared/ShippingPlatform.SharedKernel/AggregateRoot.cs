@@ -1,8 +1,6 @@
-using ShippingPlatform.Booking.Domain.Event;
+namespace ShippingPlatform.SharedKernel;
 
-namespace ShippingPlatform.Booking.Domain.Entity;
-
-public class AggregateRoot
+public abstract class AggregateRoot
 {
     private readonly List<IDomainEvent> _domainEvents = new();
 

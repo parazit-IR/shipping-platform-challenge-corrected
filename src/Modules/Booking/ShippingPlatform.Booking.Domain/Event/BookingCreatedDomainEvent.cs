@@ -1,3 +1,5 @@
+using ShippingPlatform.SharedKernel;
+
 namespace ShippingPlatform.Booking.Domain.Event;
 
 public sealed record BookingCreatedDomainEvent(

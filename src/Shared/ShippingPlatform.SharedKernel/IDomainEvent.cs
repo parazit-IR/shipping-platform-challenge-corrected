@@ -1,4 +1,4 @@
-namespace ShippingPlatform.Booking.Domain.Event;
+namespace ShippingPlatform.SharedKernel;
 
 public interface IDomainEvent
 {

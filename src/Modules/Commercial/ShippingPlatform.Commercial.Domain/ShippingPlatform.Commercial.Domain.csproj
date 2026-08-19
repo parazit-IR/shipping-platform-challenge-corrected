@@ -7,10 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Entity\" />
       <Folder Include="Event\" />
-      <Folder Include="Exception\" />
-      <Folder Include="ValueObject\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\ShippingPlatform.SharedKernel\ShippingPlatform.SharedKernel.csproj" />
     </ItemGroup>
 
 </Project>
