@@ -7,6 +7,7 @@ public sealed class BookingDbContextFactory: IDesignTimeDbContextFactory<Booking
 {
     public BookingDbContext CreateDbContext(string[] args)
     {
+        //todo - not safe -  move to environment
         var connectionString =
             Environment.GetEnvironmentVariable(
                 "BOOKING_DB_CONNECTION_STRING")

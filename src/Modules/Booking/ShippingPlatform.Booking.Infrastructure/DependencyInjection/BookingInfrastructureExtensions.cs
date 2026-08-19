@@ -19,10 +19,10 @@ public static class BookingInfrastructureExtensions
         services.AddDbContext<BookingDbContext>(options => options.UseNpgsql(
             connectionString, npgsqlOptions =>
                 npgsqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "booking")));
+        
         services.AddScoped<IBookingRepository, BookingRepository>();
 
-        // Temporary until Commercial is implemented.
-        services.AddScoped<IAgreementEligibilityPort, AlwaysEligibleAgreementAdapter>();
+        services.AddScoped<IAgreementEligibilityPort, CommercialAgreementEligibilityAdapter>();
 
         return services;
     }

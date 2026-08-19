@@ -7,11 +7,11 @@ public sealed class CommercialDbContextFactory: IDesignTimeDbContextFactory<Comm
 {
     public CommercialDbContext CreateDbContext(string[] args)
     {
+        //todo - not safe -  move to environment
         var connectionString =
             Environment.GetEnvironmentVariable(
                 "COMMERCIAL_DB_CONNECTION_STRING")
-            ?? throw new InvalidOperationException(
-                "COMMERCIAL_DB_CONNECTION_STRING is not configured.");
+            ?? "Host=localhost;Port=5432;Database=shipping_platform;Username=postgres;Password=postgres";
 
         var optionsBuilder = new DbContextOptionsBuilder<CommercialDbContext>();
 
