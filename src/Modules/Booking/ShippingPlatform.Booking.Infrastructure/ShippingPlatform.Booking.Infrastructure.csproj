@@ -7,14 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Adapter\In\Web\" />
-      <Folder Include="Adapter\Out\Commercial\" />
-      <Folder Include="Adapter\Out\Persistence\" />
+      <ProjectReference Include="..\ShippingPlatform.Booking.Application\ShippingPlatform.Booking.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ShippingPlatform.Booking.Application\ShippingPlatform.Booking.Application.csproj" />
-      <ProjectReference Include="..\ShippingPlatform.Booking.Domain\ShippingPlatform.Booking.Domain.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.11" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.11" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Adapter\Out\Persistence\Migrations\" />
     </ItemGroup>
 
 </Project>

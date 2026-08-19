@@ -7,7 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ShippingPlatform.Booking.Domain\ShippingPlatform.Booking.Domain.csproj" />
+      <ProjectReference Include="..\ShippingPlatform.Booking.Application\ShippingPlatform.Booking.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
 </Project>
