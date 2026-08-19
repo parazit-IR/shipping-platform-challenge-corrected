@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Exception\" />
+      <Folder Include="Port\In\" />
+      <Folder Include="Port\Out\" />
+      <Folder Include="Service\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ShippingPlatform.Commercial.Domain\ShippingPlatform.Commercial.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

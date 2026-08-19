@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Host", "src\ShippingPlatform.Host\ShippingPlatform.Host.csproj", "{12CDE626-DA63-4CE4-8F3D-4CFEF97FBF47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Booking.Domain", "src\Modules\Booking\ShippingPlatform.Booking.Domain\ShippingPlatform.Booking.Domain.csproj", "{DF2652DF-619B-4785-BD7F-B4D072C3B67C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Booking.Application", "src\Modules\Booking\ShippingPlatform.Booking.Application\ShippingPlatform.Booking.Application.csproj", "{27CD607C-C2F8-4D46-B63D-9FBFD0BC5811}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Booking.Infrastructure", "src\Modules\Booking\ShippingPlatform.Booking.Infrastructure\ShippingPlatform.Booking.Infrastructure.csproj", "{0EE93866-8EE9-47AF-8B34-91E39D7C2A3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Commercial.Domain", "src\Modules\Commercial\ShippingPlatform.Commercial.Domain\ShippingPlatform.Commercial.Domain.csproj", "{79007734-98CE-440F-B39E-BFD37C857461}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Commercial.Application", "src\Modules\Commercial\ShippingPlatform.Commercial.Application\ShippingPlatform.Commercial.Application.csproj", "{A7C06778-F371-42E1-B7E4-81EB880CF8BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingPlatform.Commercial.Infrastructure", "src\Modules\Commercial\ShippingPlatform.Commercial.Infrastructure\ShippingPlatform.Commercial.Infrastructure.csproj", "{EAC4C4B8-0EDA-4AFD-8B25-8D5FB3707B5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12CDE626-DA63-4CE4-8F3D-4CFEF97FBF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CDE626-DA63-4CE4-8F3D-4CFEF97FBF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CDE626-DA63-4CE4-8F3D-4CFEF97FBF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CDE626-DA63-4CE4-8F3D-4CFEF97FBF47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2652DF-619B-4785-BD7F-B4D072C3B67C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2652DF-619B-4785-BD7F-B4D072C3B67C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2652DF-619B-4785-BD7F-B4D072C3B67C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2652DF-619B-4785-BD7F-B4D072C3B67C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27CD607C-C2F8-4D46-B63D-9FBFD0BC5811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CD607C-C2F8-4D46-B63D-9FBFD0BC5811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CD607C-C2F8-4D46-B63D-9FBFD0BC5811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CD607C-C2F8-4D46-B63D-9FBFD0BC5811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE93866-8EE9-47AF-8B34-91E39D7C2A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE93866-8EE9-47AF-8B34-91E39D7C2A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE93866-8EE9-47AF-8B34-91E39D7C2A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE93866-8EE9-47AF-8B34-91E39D7C2A3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79007734-98CE-440F-B39E-BFD37C857461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79007734-98CE-440F-B39E-BFD37C857461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79007734-98CE-440F-B39E-BFD37C857461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79007734-98CE-440F-B39E-BFD37C857461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7C06778-F371-42E1-B7E4-81EB880CF8BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7C06778-F371-42E1-B7E4-81EB880CF8BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7C06778-F371-42E1-B7E4-81EB880CF8BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7C06778-F371-42E1-B7E4-81EB880CF8BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC4C4B8-0EDA-4AFD-8B25-8D5FB3707B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC4C4B8-0EDA-4AFD-8B25-8D5FB3707B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC4C4B8-0EDA-4AFD-8B25-8D5FB3707B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC4C4B8-0EDA-4AFD-8B25-8D5FB3707B5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

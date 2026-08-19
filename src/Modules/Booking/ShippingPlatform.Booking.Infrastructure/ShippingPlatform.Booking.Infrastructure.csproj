@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Adapter\In\Web\" />
+      <Folder Include="Adapter\Out\Commercial\" />
+      <Folder Include="Adapter\Out\Persistence\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ShippingPlatform.Booking.Application\ShippingPlatform.Booking.Application.csproj" />
+      <ProjectReference Include="..\ShippingPlatform.Booking.Domain\ShippingPlatform.Booking.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
