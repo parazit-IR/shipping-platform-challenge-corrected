@@ -1,5 +1,3 @@
 namespace ShippingPlatform.Booking.Domain.Exception;
 
-public class DomainValidationException(string message): SystemException(message)
-{
-}
+public sealed class DomainValidationException(string message): BookingDomainException(message);

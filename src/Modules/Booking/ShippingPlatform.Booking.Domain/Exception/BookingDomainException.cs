@@ -1,3 +1,3 @@
 namespace ShippingPlatform.Booking.Domain.Exception;
 
-public class BookingDomainException(string message) : SystemException(message);
+public class BookingDomainException(string message) : System.Exception(message);
