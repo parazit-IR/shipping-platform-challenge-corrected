@@ -7,5 +7,6 @@ public sealed record CreateBookingCommand(
     string AgreementId,
     string Origin,
     string Destination,
-    string VoyageId)
+    string VoyageId,
+    string? IdempotencyKey = null)
     : ICommand<CreateBookingResult>;

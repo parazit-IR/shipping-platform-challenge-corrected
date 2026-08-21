@@ -12,13 +12,16 @@ public sealed class CreateBookingCommandHandler
     : ICommandHandler<CreateBookingCommand, CreateBookingResult>
 {
     private readonly IAgreementEligibilityChecker _eligibilityChecker;
+    private readonly ICreateBookingIdempotencyExecutor _idempotencyExecutor;
     private readonly IWriteUnitOfWork _writeUnitOfWork;
 
     public CreateBookingCommandHandler(
         IAgreementEligibilityChecker eligibilityChecker,
+        ICreateBookingIdempotencyExecutor idempotencyExecutor,
         IWriteUnitOfWork writeUnitOfWork)
     {
         _eligibilityChecker = eligibilityChecker;
+        _idempotencyExecutor = idempotencyExecutor;
         _writeUnitOfWork = writeUnitOfWork;
     }
 
@@ -32,6 +35,46 @@ public sealed class CreateBookingCommandHandler
         var destination = Destination.Create(command.Destination);
         var voyageId = VoyageId.Create(command.VoyageId);
 
+        if (string.IsNullOrWhiteSpace(command.IdempotencyKey))
+        {
+            return await CreateBookingAsync(
+                customerId,
+                agreementId,
+                origin,
+                destination,
+                voyageId,
+                cancellationToken);
+        }
+
+        var fingerprint =
+            CreateBookingRequestFingerprint.Compute(
+                customerId,
+                agreementId,
+                origin,
+                destination,
+                voyageId);
+
+        return await _idempotencyExecutor.ExecuteAsync(
+            command.IdempotencyKey.Trim(),
+            fingerprint,
+            ct => CreateBookingAsync(
+                customerId,
+                agreementId,
+                origin,
+                destination,
+                voyageId,
+                ct),
+            cancellationToken);
+    }
+
+    private async Task<CreateBookingResult> CreateBookingAsync(
+        CustomerId customerId,
+        AgreementId agreementId,
+        Origin origin,
+        Destination destination,
+        VoyageId voyageId,
+        CancellationToken cancellationToken)
+    {
         var eligibility =
             await _eligibilityChecker.CheckAsync(
                 customerId.Value,
@@ -45,22 +88,22 @@ public sealed class CreateBookingCommandHandler
                 CommercialEligibilityStatus.CustomerNotFound =>
                     new CommercialEligibilityException(
                         eligibility.Status,
-                        $"Customer '{command.CustomerId}' was not found."),
+                        $"Customer '{customerId.Value}' was not found."),
 
                 CommercialEligibilityStatus.AgreementNotFound =>
                     new CommercialEligibilityException(
                         eligibility.Status,
-                        $"Agreement '{command.AgreementId}' was not found."),
+                        $"Agreement '{agreementId.Value}' was not found."),
 
                 CommercialEligibilityStatus.AgreementInactive =>
                     new CommercialEligibilityException(
                         eligibility.Status,
-                        $"Agreement '{command.AgreementId}' is inactive."),
+                        $"Agreement '{agreementId.Value}' is inactive."),
 
                 _ =>
                     new CommercialEligibilityException(
                         eligibility.Status,
-                        $"Agreement '{command.AgreementId}' is not eligible for booking creation.")
+                        $"Agreement '{agreementId.Value}' is not eligible for booking creation.")
             };
         }
 

@@ -33,6 +33,9 @@ public sealed class ApiExceptionHandler(
                         (422, "Agreement not eligible")
                 },
 
+            IdempotencyConflictException =>
+                (409, "Idempotency key conflict"),
+
             DomainException =>
                 (400, "Invalid request"),
 

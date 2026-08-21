@@ -35,6 +35,42 @@ internal sealed class FakeAgreementEligibilityChecker : IAgreementEligibilityChe
     }
 }
 
+internal sealed class FakeCreateBookingIdempotencyExecutor : ICreateBookingIdempotencyExecutor
+{
+    public int CallCount { get; private set; }
+    public string? LastIdempotencyKey { get; private set; }
+    public string? LastRequestFingerprint { get; private set; }
+    public CancellationToken LastCancellationToken { get; private set; }
+    public bool ExecuteOperation { get; set; } = true;
+    public CreateBookingResult? ResultToReturn { get; set; }
+    public Exception? ExceptionToThrow { get; set; }
+
+    public async Task<CreateBookingResult> ExecuteAsync(
+        string idempotencyKey,
+        string requestFingerprint,
+        Func<CancellationToken, Task<CreateBookingResult>> operation,
+        CancellationToken cancellationToken = default)
+    {
+        CallCount++;
+        LastIdempotencyKey = idempotencyKey;
+        LastRequestFingerprint = requestFingerprint;
+        LastCancellationToken = cancellationToken;
+
+        if (ExceptionToThrow is not null)
+        {
+            throw ExceptionToThrow;
+        }
+
+        if (!ExecuteOperation)
+        {
+            return ResultToReturn
+                   ?? throw new InvalidOperationException("A replay result must be provided when ExecuteOperation is false.");
+        }
+
+        return await operation(cancellationToken);
+    }
+}
+
 internal sealed class FakeBookingWriteRepository : IBookingWriteRepository
 {
     public List<BookingAggregate> AddedEntities { get; } = [];

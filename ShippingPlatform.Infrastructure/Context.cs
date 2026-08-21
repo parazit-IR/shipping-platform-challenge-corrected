@@ -13,10 +13,13 @@ public sealed class Context : DbContext
     public DbSet<BookingAggregate> Bookings => Set<BookingAggregate>();
     public DbSet<AgreementAggregate> Agreements => Set<AgreementAggregate>();
     internal DbSet<Commercial.CustomerRecord> Customers => Set<Commercial.CustomerRecord>();
+    internal DbSet<Booking.CreateBookingIdempotencyRecord> CreateBookingIdempotencyRecords =>
+        Set<Booking.CreateBookingIdempotencyRecord>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new Booking.BookingConfiguration());
+        modelBuilder.ApplyConfiguration(new Booking.CreateBookingIdempotencyConfiguration());
         modelBuilder.ApplyConfiguration(new Commercial.AgreementConfiguration());
         modelBuilder.ApplyConfiguration(new Commercial.CustomerConfiguration());
 

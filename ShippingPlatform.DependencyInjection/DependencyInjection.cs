@@ -7,6 +7,7 @@ using ShippingPlatform.Application.Commercial.Queries.CheckAgreementEligibility;
 using ShippingPlatform.Domain.DataAccess;
 using ShippingPlatform.Infrastructure;
 using ShippingPlatform.Infrastructure.Application;
+using ShippingPlatform.Infrastructure.Booking;
 using ShippingPlatform.Infrastructure.Commercial;
 
 namespace ShippingPlatform.DependencyInjection;
@@ -46,6 +47,10 @@ public static class DependencyInjection
             IAgreementEligibilityChecker>(
             sp => sp.GetRequiredService<
                 CheckAgreementEligibilityQueryHandler>());
+
+        services.AddScoped<
+            ICreateBookingIdempotencyExecutor,
+            CreateBookingIdempotencyExecutor>();
 
         services.AddScoped<
             ICommandHandler<
