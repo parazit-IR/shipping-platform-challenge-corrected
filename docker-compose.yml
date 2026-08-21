@@ -1,0 +1,68 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: shipping-platform-postgres
+
+    environment:
+      POSTGRES_DB: shipping_platform
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - shipping-platform-postgres-data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres -d shipping_platform
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrations:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrations
+
+    container_name: shipping-platform-migrations
+
+    environment:
+      ConnectionStrings__ShippingPlatform: "Host=postgres;Port=5432;Database=shipping_platform;Username=postgres;Password=postgres"
+
+    command:
+      - "--connection"
+      - "Host=postgres;Port=5432;Database=shipping_platform;Username=postgres;Password=postgres"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+
+    container_name: shipping-platform-api
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__ShippingPlatform: "Host=postgres;Port=5432;Database=shipping_platform;Username=postgres;Password=postgres"
+
+    ports:
+      - "5001:8080"
+
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+
+    restart: unless-stopped
+
+volumes:
+  shipping-platform-postgres-data:

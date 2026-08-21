@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core\ShippingPlatform.Infrastructure.DataAccess.Domain\ShippingPlatform.Infrastructure.DataAccess.Domain.csproj" />
+      <ProjectReference Include="..\Core\ShippingPlatform.Infrastructure.Domain\ShippingPlatform.Infrastructure.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

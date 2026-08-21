@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core\ShippingPlatform.Infrastructure.Application\ShippingPlatform.Infrastructure.Application.csproj" />
+      <ProjectReference Include="..\ShippingPlatform.Domain\ShippingPlatform.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Booking\Commands\" />
+    </ItemGroup>
+
+</Project>
