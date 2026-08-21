@@ -1,0 +1,50 @@
+using Microsoft.AspNetCore.Mvc;
+using ShippingPlatform.Api.Booking.Contract;
+using ShippingPlatform.Application.Booking.Commands.Create;
+using ShippingPlatform.Infrastructure.Application;
+
+namespace ShippingPlatform.Api.Booking.Controller;
+
+[ApiController]
+[Route("api/bookings")]
+public sealed class BookingsController : ControllerBase
+{
+    private readonly ICommandHandler<CreateBookingCommand, CreateBookingResult> _handler;
+    public BookingsController(ICommandHandler<CreateBookingCommand, CreateBookingResult> handler)
+    {
+        _handler = handler;
+    }
+
+    [HttpPost]
+    [ProducesResponseType(
+        typeof(CreateBookingResponse),
+        StatusCodes.Status201Created)]
+    [ProducesResponseType(
+        typeof(ValidationProblemDetails),
+        StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(
+        typeof(ProblemDetails),
+        StatusCodes.Status404NotFound)]
+    [ProducesResponseType(
+        typeof(ProblemDetails),
+        StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Create(
+        [FromBody] CreateBookingRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _handler.Handle(
+            new CreateBookingCommand(
+                request.CustomerId!,
+                request.AgreementId!,
+                request.Origin!,
+                request.Destination!,
+                request.VoyageId!),
+            cancellationToken);
+
+        return Created(
+            $"/api/bookings/{result.BookingId}",
+            new CreateBookingResponse(
+                result.BookingId,
+                result.Status));
+    }
+}
