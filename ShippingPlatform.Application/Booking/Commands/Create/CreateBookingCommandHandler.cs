@@ -26,10 +26,16 @@ public sealed class CreateBookingCommandHandler
         CreateBookingCommand command,
         CancellationToken cancellationToken = default)
     {
+        var customerId = CustomerId.Create(command.CustomerId);
+        var agreementId = AgreementId.Create(command.AgreementId);
+        var origin = Origin.Create(command.Origin);
+        var destination = Destination.Create(command.Destination);
+        var voyageId = VoyageId.Create(command.VoyageId);
+
         var eligibility =
             await _eligibilityChecker.CheckAsync(
-                command.CustomerId,
-                command.AgreementId,
+                customerId.Value,
+                agreementId.Value,
                 cancellationToken);
 
         if (!eligibility.IsEligible)
@@ -59,11 +65,11 @@ public sealed class CreateBookingCommandHandler
         }
 
         var booking = BookingAggregate.Create(
-            CustomerId.Create(command.CustomerId),
-            AgreementId.Create(command.AgreementId),
-            Origin.Create(command.Origin),
-            Destination.Create(command.Destination),
-            VoyageId.Create(command.VoyageId));
+            customerId,
+            agreementId,
+            origin,
+            destination,
+            voyageId);
 
         await _writeUnitOfWork.Bookings.AddAsync(
             booking,
