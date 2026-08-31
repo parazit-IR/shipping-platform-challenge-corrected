@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace ShippingPlatform.Infrastructure.Application;
 
-public interface IQuery<TResponse>
+public interface IQuery<out TResponse>: IRequest<TResponse>
 {
     
 }

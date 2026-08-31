@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ShippingPlatform.Api.Booking.Contract;
 using ShippingPlatform.Application.Booking.Commands.Create;
@@ -9,10 +10,20 @@ namespace ShippingPlatform.Api.Booking.Controller;
 [Route("api/bookings")]
 public sealed class BookingsController : ControllerBase
 {
-    private readonly ICommandHandler<CreateBookingCommand, CreateBookingResult> _handler;
-    public BookingsController(ICommandHandler<CreateBookingCommand, CreateBookingResult> handler)
+    // IMediator is lighter that ISender interface
+    // IPublisher for publish notification
+    // ISender
+    // → Send()
+    // 
+    // IPublisher
+    // → Publish()
+    // 
+    // IMediator
+    // → for both(IPublisher, ISender)
+    private readonly ISender _sender;
+    public BookingsController(ISender sender)
     {
-        _handler = handler;
+        _sender = sender;
     }
 
     [HttpPost]
@@ -55,7 +66,7 @@ public sealed class BookingsController : ControllerBase
             }
         }
 
-        var result = await _handler.Handle(
+        var result = await _sender.Send(
             new CreateBookingCommand(
                 request.CustomerId!,
                 request.AgreementId!,

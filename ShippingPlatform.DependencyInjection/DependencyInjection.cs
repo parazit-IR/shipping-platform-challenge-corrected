@@ -37,13 +37,6 @@ public static class DependencyInjection
             CheckAgreementEligibilityQueryHandler>();
 
         services.AddScoped<
-            IQueryHandler<
-                CheckAgreementEligibilityQuery,
-                CheckAgreementEligibilityResult>>(
-            sp => sp.GetRequiredService<
-                CheckAgreementEligibilityQueryHandler>());
-
-        services.AddScoped<
             IAgreementEligibilityChecker>(
             sp => sp.GetRequiredService<
                 CheckAgreementEligibilityQueryHandler>());
@@ -51,12 +44,13 @@ public static class DependencyInjection
         services.AddScoped<
             ICreateBookingIdempotencyExecutor,
             CreateBookingIdempotencyExecutor>();
-
-        services.AddScoped<
-            ICommandHandler<
-                CreateBookingCommand,
-                CreateBookingResult>,
-            CreateBookingCommandHandler>();
+        
+        // info: scan application's assembly and find all IRequestHandler
+        services.AddMediatR(configuration =>
+        {
+            configuration.RegisterServicesFromAssembly(
+                typeof(CreateBookingCommand).Assembly);
+        });
 
         return services;
     }
