@@ -7,6 +7,8 @@ using ShippingPlatform.Domain.Commercial;
 using ShippingPlatform.Domain.Commercial.Entity;
 using ShippingPlatform.Domain.Commercial.ValueObject;
 using ShippingPlatform.Domain.DataAccess;
+using ShippingPlatform.Infrastructure.Application;
+using ShippingPlatform.Infrastructure.Application.Common.Ports;
 using ShippingPlatform.Infrastructure.DataAccess.Domain;
 
 using BookingAggregate = ShippingPlatform.Domain.Booking.Entity.Booking;
@@ -200,3 +202,19 @@ internal sealed class FakeCustomerExistencePort : ICustomerExistencePort
         return Task.FromResult(ExistsResult);
     }
 }
+
+internal sealed class FakeTransactionManager : ITransactionManager
+{
+    public bool WasExecuted { get; private set; }
+    public async Task<TResponse> ExecuteAsync<TResponse>(
+        Func<Task<TResponse>> operation,
+        CancellationToken cancellationToken = default)
+    {
+        WasExecuted = true;
+        return await operation();
+    }
+}
+
+internal sealed record TestTransactionalCommand : ITransactionalCommand<string>;
+internal sealed record TestCommand : ICommand<string>;
+

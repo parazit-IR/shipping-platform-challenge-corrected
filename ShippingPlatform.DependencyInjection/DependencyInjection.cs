@@ -6,9 +6,10 @@ using ShippingPlatform.Application.Common.Ports;
 using ShippingPlatform.Application.Commercial.Queries.CheckAgreementEligibility;
 using ShippingPlatform.Domain.DataAccess;
 using ShippingPlatform.Infrastructure;
-using ShippingPlatform.Infrastructure.Application;
+using ShippingPlatform.Infrastructure.Application.Common.Ports;
 using ShippingPlatform.Infrastructure.Booking;
 using ShippingPlatform.Infrastructure.Commercial;
+using ShippingPlatform.Infrastructure.Transactions;
 
 namespace ShippingPlatform.DependencyInjection;
 
@@ -50,7 +51,12 @@ public static class DependencyInjection
         {
             configuration.RegisterServicesFromAssembly(
                 typeof(CreateBookingCommand).Assembly);
+
+            configuration.AddOpenBehavior(
+                typeof(TransactionBehavior<,>));
         });
+        
+        services.AddScoped<ITransactionManager, EfTransactionManager>();
 
         return services;
     }
