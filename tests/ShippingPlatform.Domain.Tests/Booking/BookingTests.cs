@@ -131,4 +131,34 @@ public sealed class BookingTests
 
         Assert.Equal("ContainerRequest is required.", exception.Message);
     }
+    
+    [Fact]
+    public void Cancel_ShouldChangeStatusToCancelled_WhenBookingCanBeCancelled()
+    {
+        var booking = BookingAggregate.Create(
+            CustomerId.Create("CUST-001"),
+            AgreementId.Create("AGR-001"),
+            Origin.Create("Bandar Abbas"),
+            Destination.Create("Rotterdam"),
+            VoyageId.Create("VOY-001"));
+
+        booking.Cancel();
+
+        Assert.Equal(BookingStatus.Cancelled, booking.Status);
+    }
+    
+    [Fact]
+    public void Cancel_ShouldThrow_WhenBookingIsAlreadyCancelled()
+    {
+        var booking = BookingAggregate.Create(
+            CustomerId.Create("CUST-001"),
+            AgreementId.Create("AGR-001"),
+            Origin.Create("Bandar Abbas"),
+            Destination.Create("Rotterdam"),
+            VoyageId.Create("VOY-001"));
+
+        booking.Cancel();
+
+        Assert.Throws<DomainValidationException>(() => booking.Cancel());
+    }
 }

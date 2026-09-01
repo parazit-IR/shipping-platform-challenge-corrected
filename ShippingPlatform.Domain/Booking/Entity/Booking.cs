@@ -88,6 +88,21 @@ public sealed class Booking : AggregateRoot
 
         _containerRequests.Add(containerRequest);
     }
+    
+    public void Cancel()
+    {
+        if (Status == BookingStatus.Cancelled)
+        {
+            throw new DomainValidationException("Booking is already cancelled.");
+        }
+
+        if (Status == BookingStatus.Completed)
+        {
+            throw new DomainValidationException("Completed booking cannot be cancelled.");
+        }
+
+        Status = BookingStatus.Cancelled;
+    }
 
     //AddContainerRequest() todo
 }

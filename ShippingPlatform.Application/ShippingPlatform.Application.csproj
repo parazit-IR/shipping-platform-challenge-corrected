@@ -11,8 +11,4 @@
       <ProjectReference Include="..\ShippingPlatform.Domain\ShippingPlatform.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Booking\Commands\" />
-    </ItemGroup>
-
 </Project>

@@ -1,9 +1,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ShippingPlatform.Application.Booking.Commands.Cancel;
 using ShippingPlatform.Domain.Booking.ValueObject;
 using ShippingPlatform.Domain.DataAccess;
+using ShippingPlatform.Infrastructure;
 using ShippingPlatform.Infrastructure.Application;
 using BookingAggregate = ShippingPlatform.Domain.Booking.Entity.Booking;
 
@@ -117,5 +120,58 @@ public class TransactionBehaviorIntegrationTests
 
             return true;
         }
+    }
+    
+    // [Fact]
+    // public async Task CancelBooking_ShouldThrow_WhenBookingDoesNotExist()
+    // {
+        // ...
+
+        // await Assert.ThrowsAsync<InvalidOperationException>(
+            // () => sender.Send(
+                // new CancelBookingCommand(Guid.NewGuid())));
+    // }
+    
+    
+    [Fact]
+    public async Task CancelBooking_ShouldPersistCancelledStatus()
+    {
+        // Arrange
+        await _factory.ResetDatabaseAsync();
+
+        var customerId = $"CUST-CANCEL-{Guid.NewGuid():N}";
+
+        var booking = BookingAggregate.Create(
+                CustomerId.Create(customerId),
+                AgreementId.Create("AGR-TX-001"),
+                Origin.Create("Bandar Abbas"),
+                Destination.Create("Rotterdam"),
+                VoyageId.Create("VOY-TX-001"));
+
+        // Persist initial Draft booking
+        await using (var arrangeScope = _factory.Services.CreateAsyncScope())
+        {
+            var context = arrangeScope.ServiceProvider.GetRequiredService<Context>();
+            await context.Bookings.AddAsync(booking);
+            await context.SaveChangesAsync();
+        }
+
+        // Act
+        await using (var commandScope = _factory.Services.CreateAsyncScope())
+        {
+            var sender = commandScope.ServiceProvider.GetRequiredService<ISender>();
+            var result = await sender.Send(new CancelBookingCommand(booking.Id.Value));
+            Assert.Equal("Cancelled", result.Status);
+        }
+
+        // Assert against a fresh DbContext
+        await using var verificationScope = _factory.Services.CreateAsyncScope();
+
+        var verificationContext = verificationScope.ServiceProvider.GetRequiredService<Context>();
+
+        var persistedBooking = await verificationContext.Bookings.AsNoTracking()
+                .SingleAsync(x => x.Id == new BookingId(booking.Id.Value));
+
+        Assert.Equal(BookingStatus.Cancelled, persistedBooking.Status);
     }
 }
