@@ -1,7 +1,6 @@
 namespace ShippingPlatform.Infrastructure.DataAccess.Domain;
 
-public interface IWriteRepository<T>
-    where T : class
+public interface IWriteRepository<T> where T : class
 {
     Task AddAsync(
         T entity,

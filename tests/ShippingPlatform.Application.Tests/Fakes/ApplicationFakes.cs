@@ -3,15 +3,16 @@ using ShippingPlatform.Application.Booking.Commands.Create;
 using ShippingPlatform.Application.Common.Ports;
 using ShippingPlatform.Application.Commercial.Queries.CheckAgreementEligibility;
 using ShippingPlatform.Domain.Booking;
+using ShippingPlatform.Domain.Booking.ValueObject;
 using ShippingPlatform.Domain.Commercial;
 using ShippingPlatform.Domain.Commercial.Entity;
-using ShippingPlatform.Domain.Commercial.ValueObject;
 using ShippingPlatform.Domain.DataAccess;
 using ShippingPlatform.Infrastructure.Application;
 using ShippingPlatform.Infrastructure.Application.Common.Ports;
 using ShippingPlatform.Infrastructure.DataAccess.Domain;
-
+using AgreementId = ShippingPlatform.Domain.Commercial.ValueObject.AgreementId;
 using BookingAggregate = ShippingPlatform.Domain.Booking.Entity.Booking;
+using CustomerId = ShippingPlatform.Domain.Commercial.ValueObject.CustomerId;
 
 namespace ShippingPlatform.Application.Tests.Fakes;
 
@@ -89,6 +90,11 @@ internal sealed class FakeBookingWriteRepository : IBookingWriteRepository
 
     public void Remove(BookingAggregate entity)
     {
+    }
+
+    public Task<BookingAggregate?> FindByIdAsync(BookingId bookingId, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }
 

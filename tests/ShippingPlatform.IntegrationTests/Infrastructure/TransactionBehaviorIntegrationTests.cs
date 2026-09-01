@@ -107,8 +107,7 @@ public class TransactionBehaviorIntegrationTests
              * TransactionBehavior must keep it inside its
              * transaction.
              */
-            await _unitOfWork.SaveChangesAsync(
-                cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             if (request.ShouldFail)
             {
