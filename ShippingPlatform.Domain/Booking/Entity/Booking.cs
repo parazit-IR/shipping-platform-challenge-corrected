@@ -16,6 +16,7 @@ public sealed class Booking : AggregateRoot
     public VoyageId VoyageId { get; }
     public BookingStatus Status { get; private set; }
     public DateTimeOffset CreatedAt { get; }
+    public long Version { get; private set; }
     private readonly List<ContainerRequest> _containerRequests = new List<ContainerRequest>();
 
     private Booking(
@@ -26,7 +27,8 @@ public sealed class Booking : AggregateRoot
         Destination destination,
         VoyageId voyageId,
         BookingStatus status,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        long version = 1)
     {
         Id = id;
         CustomerId = customerId;
@@ -36,6 +38,7 @@ public sealed class Booking : AggregateRoot
         VoyageId = voyageId;
         Status = status;
         CreatedAt = createdAt;
+        Version = version;
     }
 
     public static Booking Create(

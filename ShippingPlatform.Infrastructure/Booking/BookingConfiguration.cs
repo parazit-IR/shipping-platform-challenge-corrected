@@ -63,7 +63,14 @@ public sealed class BookingConfiguration : IEntityTypeConfiguration<BookingAggre
         builder.Property(x => x.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
-        
+
+        builder.Property(x => x.Version)
+            .HasColumnName("version")
+            .HasColumnType("bigint")
+            .HasDefaultValue(1L)
+            .IsRequired()
+            .IsConcurrencyToken();
+
         builder.Ignore("_containerRequests");
 
         builder.Ignore(x => x.DomainEvents);
